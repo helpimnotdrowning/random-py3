@@ -19,3 +19,7 @@ cool and epic:tm: collection of python 3 scripts i've made
 - An implementation of neofetch in python for Windows systems.
 - Currently requires either Powershell 5.1+ or [Powershell Core](https://github.com/PowerShell/PowerShell#-powershell) (because of the Get-ConputerInfo powershell command and use of ANSI color escape sequences)
 - Incomplete
+### [mcAdvancementList.py](mcAdvancementList.py)
+- Create list of all advancements (excluding recipes) from a generated data dump from a Minecraft server jar
+- Instructions to create data dump in file
+- Made for updating a [shared advancements datapack](https://www.planetminecraft.com/data-pack/shared-advancements/) for 1.16.1
