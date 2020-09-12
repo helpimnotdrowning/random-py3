@@ -1,19 +1,18 @@
-# ment for making minecraft panoramas
-
+# meant for making minecraft panoramas
 from PIL import Image
 from datetime import datetime
 import os
-import forest as for
 
-# list of image extensions
-imgextlist = (".png", ".jpg", ".bmp", ".jpeg", ".tga", ".tif", ".tga")
+def log(str):
+    print("[" + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "]: " + str)
+
 
 img = input("Enter path to panorama : ")
 
 try:
     im = Image.open(img)
 except:
-    input("This image does't exist.")
+    input("This image does't exist or couldn't be opened.")
     input("Press ANY KEY to exit.")
 
 im = Image.open(img)
