@@ -19,6 +19,9 @@ cool and epic:tm: collection of python 3 scripts i've made
 - An implementation of neofetch in python for Windows systems.
 - Currently requires either Powershell 5.1+ or [Powershell Core](https://github.com/PowerShell/PowerShell#-powershell) (because of the Get-ConputerInfo powershell command and use of ANSI color escape sequences)
 - Incomplete
+### [auto_img2ascii.py](auto_img2ascii.py)
+- Takes an image file as input and outputs ascii art of it.
+- No, its not done. Looks like hot garbage, i'll get around to it.
 ### [mcAdvancementList.py](mcAdvancementList.py)
 - Create list of all advancements (excluding recipes) from a generated data dump from a Minecraft server jar
 - Instructions to create data dump in file
