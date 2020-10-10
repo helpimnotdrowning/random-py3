@@ -23,7 +23,7 @@ def log(string):
 
 def resize(image, new_width = 100):
     width, height = image.size
-    new_height = new_width * height // width // 2
+    new_height = round(new_width * height // width // 2.5)
     print(new_width,new_height)
     return image.resize((new_width, new_height))
     
@@ -47,7 +47,7 @@ def main():
     except: log(path, "Unable to find image ")
     
     width,height = image.size
-    image = resize(image,200) #resize image
+    image = resize(image,100) #resize image
     
     for x in range(width):
         for y in range(height):
@@ -60,15 +60,11 @@ def main():
     
     ascii_str = pixel_to_ascii(greyscale_image)  # convert to ascii
     
-    img_width = greyscale_image.width
-    
-    ascii_str_len = len(ascii_str)
-    
     ascii_img = ""
     
     #Split the string based on width of the image
-    for i in range(0, ascii_str_len, img_width):
-        ascii_img += ascii_str[i:i+img_width] + "\n"
+    for i in range(0, len(ascii_str), greyscale_image.width):
+        ascii_img += ascii_str[i:i+greyscale_image.width] + "\n"
     
     for x in range(len(ascii_img.splitlines())):
         for y in range(x):
