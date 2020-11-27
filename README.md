@@ -2,10 +2,10 @@
 # python3
 
 cool and epic:tm: collection of python 3 scripts i've made
-### [frame-extractor.py](frame-extractor.py)
+### [frame_extractor.py](frame_extractor.py)
 - Takes frames from a specified video file and saves them as images to a directory.
 - You can specify the framerate that they're extracted at.
-###  [img-converter.py](img-converter.py)
+###  [img_converter.py](img_converter.py)
 - Batch image converter from any format to one format (ex folder of png, bmp, jpg to jpg)
 - Can specify compression quality of output format when appplicable.
 - Orgin folder can only contain images or else it breaks. might fix.
@@ -22,7 +22,7 @@ cool and epic:tm: collection of python 3 scripts i've made
 ### [auto_img2ascii.py](auto_img2ascii.py)
 - Takes an image file as input and outputs ascii art of it.
 - No, its not done. Looks like hot garbage, i'll get around to it.
-### [mcAdvancementList.py](mcAdvancementList.py)
+### [mc_advancement_list.py](mc_advancement_list.py)
 - Create list of all advancements (excluding recipes) from a generated data dump from a Minecraft server jar
 - Instructions to create data dump in file
 - Made for updating a [shared advancements datapack](https://www.planetminecraft.com/data-pack/shared-advancements/) for 1.16.1
