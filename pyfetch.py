@@ -78,7 +78,7 @@ accentColB = int(accentCol[0:2], 16)
 accentColG = int(accentCol[2:4], 16)
 accentColR = int(accentCol[4:6], 16)
 
-# pas to to RGB2ANSI() and create a custom ANSI color code based on the current windows accent color.
+# pass to RGB2ANSI() and create a custom ANSI color code based on the current windows accent color.
 # doing it like this because windows is [REDACTED] and saves the accent color in BGR format instead of RGB
 accentColANSI = RGB2ANSI(accentColR, accentColG, accentColB)
 accentColInvANSI = RGB2ANSI(255 - accentColR, 255 - accentColG, 255 - accentColB)
