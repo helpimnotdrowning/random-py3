@@ -27,11 +27,11 @@ def resize(image, new_width = 100):
     print(new_width,new_height)
     return image.resize((new_width, new_height))
     
-def to_greyscale(image):
+def to_grayscale(image):
     return image.convert("L")
 
 def pixel_to_ascii(image):
-    pixels = image.getdata()
+    pixels = to_grayscale(image).getdata()
     log(pixels)
     ascii_str = "";
     for pixel in pixels:
@@ -56,9 +56,7 @@ def main():
             #print(RGB2ANSI(image.getpixel((x,y))[0],image.getpixel((x,y))[1],image.getpixel((x,y))[2]) + str(image.getpixel((x,y))))
     log("size of image is " + str(width * height))
     
-    greyscale_image = to_greyscale(image)  # convert to grayscale
-    
-    ascii_str = pixel_to_ascii(greyscale_image)  # convert to ascii
+    ascii_str = pixel_to_ascii(image)  # convert to ascii
     
     ascii_img = ""
     
