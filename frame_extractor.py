@@ -14,7 +14,11 @@ def extractor():
     framePath = str(path(input("Output path for the frames:\n")))
     if not framePath.endswith("/"): framePath = framePath + "/"
 
-    enableFrameLimit = int(input("Enable frame limit? (0 or 1)\n"))
+    enableFrameLimit = input("Enable frame limit? (0 or 1)\n")
+    try: 
+        int(enableFrameLimit)
+    except:
+        enableFrameLimit = 0
     if enableFrameLimit == 1:
         frameLimit = input("Input frame limit:\n")
     vidCap = cv2.VideoCapture(vidPath)
