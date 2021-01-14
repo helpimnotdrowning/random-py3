@@ -4,58 +4,80 @@ import datetime as dt
 from pathlib import Path as path
 
 
-def extractor():
-    secs = 0  # Sets sec (the video time i think) to 0
-    frameRate = .5  # frameRate = 1 / desired extracted frames per second
+def extractor(videoFilepath, frameOutputPath, startTime = 0, FPS = 2, frameLimit = -1):
+    frameRate = 1 / FPS
+    
     count = 1
+    timeCounter = startTime
+    
+    videoFilepath = str(path(videoFilepath))
+    
+    frameOutputPath = str(path(frameOutputPath)) + '/'
+    
+    if int(frameLimit) > 0:
+        enableFrameLimit = True
+    else:
+        enableFrameLimit = False
 
-    vidPath = str(path(input("Full path to video file (with file extension):\n")))
-
-    framePath = str(path(input("Output path for the frames:\n")))
-    if not framePath.endswith("/"): framePath = framePath + "/"
-
-    enableFrameLimit = input("Enable frame limit? (0 or 1)\n")
-    try: 
-        int(enableFrameLimit)
-    except:
-        enableFrameLimit = 0
-    if enableFrameLimit == 1:
-        frameLimit = input("Input frame limit:\n")
-    vidCap = cv2.VideoCapture(vidPath)
+    vidCap = cv2.VideoCapture(videoFilepath)
 
     # I have no idea what this does but it works
     # thank you medium.com for letting me steal your code
-    def get_frame(secs):
-        vidCap.set(cv2.CAP_PROP_POS_MSEC, secs * 1000)
+    def get_frame(timeCounter):
+        vidCap.set(cv2.CAP_PROP_POS_MSEC, timeCounter * 1000)
         hasFrames, image = vidCap.read()
         if hasFrames:
-            o = str(dt.timedelta(seconds=secs))
-            cv2.imwrite(framePath + "frame_" + str(count - 1) + "_@_time_" + o.replace(":", "'") + ".png", image)
+            o = str(dt.timedelta(seconds=timeCounter))
+            cv2.imwrite(frameOutputPath + "frame_" + str(count) + "_@_time_" + o.replace(":", "'") + ".png", image)
         return hasFrames
 
-    success = get_frame(secs)
+    success = get_frame(timeCounter)
 
     print("Operation started at " + str(dt.datetime.now().time()))
 
     while success:
-        if enableFrameLimit == 1:
+        if enableFrameLimit == True:
             if count >= int(frameLimit):  # If count is greater than or equal to frameLimit
-                x = input("Final frame " + str(count - 1) + " exported at " + str(dt.datetime.now().time()) + "\npress ENTER to exit or ANY KEY and ENTER to go again...")
-                if x != "": extractor()
-                else: exit()
-            else:
+                exitIntent = input("Final frame {0} exported at {1}\npress ENTER to exit or ANY KEY and ENTER to go again...").format(str(count), str(dt.datetime.now().time()))
+                if exitIntent != "":  # if any key was pressed to restart
+                    extractor()  # BROKEN RN THIS WONT WORK LMAO
+                else:
+                    exit()
+            elif count < int(frameLimit):  # normal operation
                 count += 1  # Current frame + 1
-                secs += frameRate  # Current time + frameRate
-                secs = round(secs, 2)  # Rounds sec to 2nd decimal place
-                success = get_frame(secs)
-        else:
+                timeCounter += frameRate  # Current time + frameRate
+                timeCounter = round(timeCounter, 2)  # Rounds sec to 2nd decimal place
+                success = get_frame(timeCounter)
+                
+        elif enableFrameLimit == False:  # normal operation when no frame limit
             count += 1  # Current frame + 1
-            secs += frameRate  # Current time + frameRate
-            secs = round(secs, 2)  # Rounds sec to 2nd decimal place
-            success = get_frame(secs)
-    y = input("Final frame " + str(count - 1) + " exported at " + str(dt.datetime.now().time()) + "\npress ENTER to exit or ANY KEY and ENTER to go again...")
-    if y != "": extractor()
-    else: exit()
+            timeCounter += frameRate  # Current time + frameRate
+            timeCounter = round(timeCounter, 2)  # Rounds sec to 2nd decimal place
+            success = get_frame(timeCounter)
+    exitIntent = input("Final frame {0} exported at {1}\npress ENTER to exit or ANY KEY and ENTER to go again...").format(str(count), str(dt.datetime.now().time()))
+    if exitIntent != "":  # if any key was pressed to restart
+        extractor()  # BROKEN RN THIS WONT WORK LMAO
+    else:
+        exit()
 
+yesResponses = ('1','y')
 
-extractor()
+targetVideoPath = input('Target video path : ')
+outputFramesPath = input('Output frames path : ')
+customFrameRate = 0
+customStartTime = 2
+customFrameLimit = -1
+
+useCustomFrameRate = input('Use custom FPS? (default is 2) (y/n/leave empty) : ')
+if useCustomFrameRate.lower() in yesResponses:
+    customFrameRate = input('Input custom frames/second : ')
+
+useCustomStartTime = input('Use custom start time? (y/n/leave empty) : ')
+if useCustomStartTime.lower() in yesResponses:
+    customStartTime = input('Input custom start time : ')
+    
+useCustomFrameLimit = input('Use custom frame limit? (y/n/leave empty) : ')
+if useCustomFrameLimit.lower() in yesResponses:
+    customFrameLimit = input('Input custom frame limit : ')
+
+extractor(targetVideoPath, outputFramesPath, customFrameRate, customStartTime, customFrameLimit)
