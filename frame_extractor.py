@@ -38,7 +38,7 @@ def extractor(videoFilepath, frameOutputPath, startTime = 0, FPS = 2, frameLimit
     while success:
         if enableFrameLimit == True:
             if count >= int(frameLimit):  # If count is greater than or equal to frameLimit
-                exitIntent = input("Final frame {0} exported at {1}\npress ENTER to exit or ANY KEY and ENTER to go again...").format(str(count), str(dt.datetime.now().time()))
+                exitIntent = input("Final frame {0} exported at {1}\npress ENTER to exit or ANY KEY and ENTER to go again...".format(str(count), str(dt.datetime.now().time())))
                 if exitIntent != "":  # if any key was pressed to restart
                     extractor()  # BROKEN RN THIS WONT WORK LMAO
                 else:
@@ -54,7 +54,7 @@ def extractor(videoFilepath, frameOutputPath, startTime = 0, FPS = 2, frameLimit
             timeCounter += frameRate  # Current time + frameRate
             timeCounter = round(timeCounter, 2)  # Rounds sec to 2nd decimal place
             success = get_frame(timeCounter)
-    exitIntent = input("Final frame {0} exported at {1}\npress ENTER to exit or ANY KEY and ENTER to go again...").format(str(count), str(dt.datetime.now().time()))
+    exitIntent = input("Final frame {0} exported at {1}\npress ENTER to exit or ANY KEY and ENTER to go again...".format(str(count), str(dt.datetime.now().time())))
     if exitIntent != "":  # if any key was pressed to restart
         extractor()  # BROKEN RN THIS WONT WORK LMAO
     else:
@@ -63,8 +63,8 @@ def extractor(videoFilepath, frameOutputPath, startTime = 0, FPS = 2, frameLimit
 
 targetVideoPath = input('Target video path : ')
 outputFramesPath = input('Output frames path : ')
-customFrameRate = 0
-customStartTime = 2
+customFrameRate = 2
+customStartTime = 0
 customFrameLimit = -1
 
 useCustomFrameRate = input('Use custom FPS? (default is 2) (y/n/leave empty) : ')
