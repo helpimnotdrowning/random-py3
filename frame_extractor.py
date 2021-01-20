@@ -59,8 +59,7 @@ def extractor(videoFilepath, frameOutputPath, startTime = 0, FPS = 2, frameLimit
         extractor()  # BROKEN RN THIS WONT WORK LMAO
     else:
         exit()
-
-yesResponses = ('1','y')
+        
 
 targetVideoPath = input('Target video path : ')
 outputFramesPath = input('Output frames path : ')
@@ -69,15 +68,15 @@ customStartTime = 2
 customFrameLimit = -1
 
 useCustomFrameRate = input('Use custom FPS? (default is 2) (y/n/leave empty) : ')
-if useCustomFrameRate.lower() in yesResponses:
+if useCustomFrameRate.lower() == 'y':
     customFrameRate = input('Input custom frames/second : ')
 
 useCustomStartTime = input('Use custom start time? (y/n/leave empty) : ')
-if useCustomStartTime.lower() in yesResponses:
+if useCustomStartTime.lower() == 'y':
     customStartTime = input('Input custom start time : ')
     
 useCustomFrameLimit = input('Use custom frame limit? (y/n/leave empty) : ')
-if useCustomFrameLimit.lower() in yesResponses:
+if useCustomFrameLimit.lower() == 'y':
     customFrameLimit = input('Input custom frame limit : ')
 
-extractor(targetVideoPath, outputFramesPath, customFrameRate, customStartTime, customFrameLimit)
+extractor(targetVideoPath, outputFramesPath, int(customStartTime), int(customFrameRate), int(customFrameLimit))
