@@ -9,7 +9,7 @@ def extractor(videoFilepath, frameOutputPath, startTime = 0, FPS = 2, frameLimit
     
     count = 1
     timeCounter = startTime
-    
+
     videoFilepath = str(path(videoFilepath))
     
     frameOutputPath = str(path(frameOutputPath)) + '/'
@@ -67,16 +67,10 @@ customFrameRate = 2
 customStartTime = 0
 customFrameLimit = -1
 
-useCustomFrameRate = input('Use custom FPS? (default is 2) (y/n/leave empty) : ')
-if useCustomFrameRate.lower() == 'y':
-    customFrameRate = input('Input custom frames/second : ')
+customFrameRate = input('Input custom frames/second (empty for 2) : ')
 
-useCustomStartTime = input('Use custom start time? (y/n/leave empty) : ')
-if useCustomStartTime.lower() == 'y':
-    customStartTime = input('Input custom start time : ')
+customStartTime = input('Input custom start time (empty for 0)    : ')
     
-useCustomFrameLimit = input('Use custom frame limit? (y/n/leave empty) : ')
-if useCustomFrameLimit.lower() == 'y':
-    customFrameLimit = input('Input custom frame limit : ')
+customFrameLimit = input('Input custom frame limit (empty for none): ')
 
-extractor(targetVideoPath, outputFramesPath, int(customStartTime), int(customFrameRate), int(customFrameLimit))
+extractor(targetVideoPath, outputFramesPath, float(customStartTime), float(customFrameRate), int(customFrameLimit))
