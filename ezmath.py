@@ -1,5 +1,6 @@
 from math import *
 import traceback
+import inspect
 
 # short helper functions to simplify typing on the REPL
 
@@ -42,10 +43,10 @@ def datan(x):
     '''atan(), but degrees (input and output)'''
     return deg(atan(x))
     
-# class shape:
-    # def __init__(self
+class shape:
+    pass
 
-class circle:
+class circle(shape):
     def __init__(self, radius):
         self.radius = radius
         self.diameter = radius * 2
@@ -53,14 +54,17 @@ class circle:
     def area(self):
         return pi * (self.radius ** 2)
         
-    def set_radius(self, radius):
-        self.__init__(radius)
+class rectangle(shape):
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
         
-    def set_diameter(self, diameter):
-        self.__init__(diameter / 2)
-        
-# class rectangle:
-    # def
+    def area(self):
+        return length * width
+
+class square(rectangle):
+    def __init__(self, length):
+        super().__init__(length, length)
 
 def cone_volume(radius, height):
     return (1/3) * pi * (radius**2) * height
@@ -68,12 +72,31 @@ def cone_volume(radius, height):
 def cylinder_volume(radius, height):
     return pi * (radius**2) * height
 
+def Convert(tup, di): 
+    for a, b in tup: 
+        di.setdefault(a, []).append(b) 
+    return di 
+      
+# Driver Code     
+tups = ''
+dictionary = {} 
+print (Convert(tups, dictionary)) 
+
+
+from code import InteractiveConsole
+
 if __name__ == '__main__':
     print('helo welcum to calculator with added stuff :)')
+    print('this prints the result of anything you put in, including the None returned by print()')
 
     while True:
+        # header = "Welcome to REPL! We hope you enjoy your stay!"
+        # footer = "Thanks for visiting the REPL today!"
+        # scope_vars = {"answer": 42}
+        # InteractiveConsole(locals=scope_vars).interact(header, footer)
+        
         eval_math = input('> ')
         try:
-            exec(eval_math)
+            print(exec(eval_math))
         except Exception as e: 
             traceback.print_exc()
