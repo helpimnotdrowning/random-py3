@@ -38,3 +38,7 @@ cool and epic:tm: collection of python 3 scripts i've made
 
 ### [ass_2_lrc.py](ass_2_lrc.py)
 - Converts .ASS/Advanced SubStation Alpha files --> .LRC/Lyric files. End goal: (SSA? <->) ASS <-> LRC <-> SRT
+
+### [ezmath.py](ezmath.py)
+- Epic and Cool math utilities, has sin+cos+tan in degrees, some simple shapes, and some 3d shape volume
+- will be eternally infdev
