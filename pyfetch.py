@@ -6,7 +6,7 @@ from datetime import datetime
 from winreg import ConnectRegistry, OpenKey, QueryValueEx
 
 
-def GetWinRegKeyValue(HKEYS, key, value):
+def get_registry_key_value(HKEYS, key, value):
     HANDLES = {"CLASSES_ROOT": winreg.HKEY_CLASSES_ROOT,
                "CURRENT_USER": winreg.HKEY_CURRENT_USER,
                "LOCAL_MACHINE": winreg.HKEY_LOCAL_MACHINE,
@@ -18,8 +18,8 @@ def GetWinRegKeyValue(HKEYS, key, value):
     return QueryValueEx(OpenKey(ConnectRegistry(None, HANDLES[HKEYS]), key), value)
 
 
-def RGB2ANSI(red=0, green=0, blue=0, isBG=0):
-    if isBG == 0:
+def RGB2ANSI(red=0, green=0, blue=0, is_bg_color=False):
+    if is_bg_color == False:
         ansiColor = "\033[38;2;{};{};{}m".format(red, green, blue)
     else:
         ansiColor = "\033[48;2;{};{};{}m".format(red, green, blue)
@@ -49,39 +49,39 @@ class ANSIColors:
     lcyan = '\033[96m'
     lwhite = '\033[97m'
     # custom
-    winRed = RGB2ANSI(255, 87, 34)
-    winGreen = RGB2ANSI(124, 179, 66)
-    winBlue = RGB2ANSI(3, 169, 244)
-    winYellow = RGB2ANSI(255, 193, 7)
+    win_red = RGB2ANSI(255, 87, 34)
+    win_green = RGB2ANSI(124, 179, 66)
+    win_blue = RGB2ANSI(3, 169, 244)
+    win_yellow = RGB2ANSI(255, 193, 7)
 
 
-user = getpass.getuser()  # (hopefully) your username
-machineName = platform.node().upper()  # the machine host name
+username = getpass.getuser()  # (hopefully) your username
+machine_name = platform.node().upper()  # the machine host name
 
-pcInfo = sp.Popen('''pwsh -c 
+pwsh_pc_info = sp.Popen('''pwsh -c 
 "$gci = Get-ComputerInfo
 
 $gci.WindowsBuildLabEx
 $gci.WindowsVersion
 $gci.OsName"''', stdout=sp.PIPE).communicate()[0].decode('utf-8').splitlines()
 
-OSVer = pcInfo[2] + ' v' + pcInfo[1]
+os_version = pwsh_pc_info[2] + ' v' + pwsh_pc_info[1]
 
 # get OS version, NOT the build number
-OSBuild = GetWinRegKeyValue("LOCAL_MACHINE", 'SOFTWARE/Microsoft/Windows NT/CurrentVersion', 'ReleaseId')[0]
+os_build = get_registry_key_value("LOCAL_MACHINE", 'SOFTWARE/Microsoft/Windows NT/CurrentVersion', 'ReleaseId')[0]
 
 # gets and reads accent color, converts to hex and cuts off '0x' at the start of value
-accentCol = hex(GetWinRegKeyValue("CURRENT_USER", 'SOFTWARE/Microsoft/Windows/CurrentVersion/Explorer/Accent', 'StartColorMenu')[0])[4:]
+accent_color = hex(get_registry_key_value("CURRENT_USER", 'SOFTWARE/Microsoft/Windows/CurrentVersion/Explorer/Accent', 'StartColorMenu')[0])[4:]
 
 # get the 2 bytes of each color channel and converts them from hex to int
-accentColB = int(accentCol[0:2], 16)
-accentColG = int(accentCol[2:4], 16)
-accentColR = int(accentCol[4:6], 16)
+accent_color_b = int(accent_color[0:2], 16)
+accent_color_g = int(accent_color[2:4], 16)
+accent_color_r = int(accent_color[4:6], 16)
 
 # pass to RGB2ANSI() and create a custom ANSI color code based on the current windows accent color.
 # doing it like this because windows is [REDACTED] and saves the accent color in BGR format instead of RGB
-accentColANSI = RGB2ANSI(accentColR, accentColG, accentColB)
-accentColInvANSI = RGB2ANSI(255 - accentColR, 255 - accentColG, 255 - accentColB)
+ansi_accent_color = RGB2ANSI(accent_color_r, accent_color_g, accent_color_b)
+inv_ansi_accent_color = RGB2ANSI(255 - accent_color_r, 255 - accent_color_g, 255 - accent_color_b)
 
 print('''
 {r}        ,.=:!!t3Z3z.,                  {FG}{TIME}{x}
@@ -101,16 +101,16 @@ print('''
 {b}             ` {y}:EEEEtttt::::z7      
 {y}                 "VEzjt:;;z>*`{x}     '''.format(
     x=ANSIColors.reset,
-    r=ANSIColors.winRed,
-    g=ANSIColors.winGreen,
-    b=ANSIColors.winBlue,
-    y=ANSIColors.winYellow,
+    r=ANSIColors.win_red,
+    g=ANSIColors.win_green,
+    b=ANSIColors.win_blue,
+    y=ANSIColors.win_yellow,
     w=ANSIColors.white,
     IN=ANSIColors.invert,
-    FG=accentColInvANSI,
-    BG=accentColInvANSI,
+    FG=inv_ansi_accent_color,
+    BG=inv_ansi_accent_color,
     TIME=datetime.now().strftime("%H:%M:%S"),
-    USR=user,
-    MNAME=machineName,
-    DASHES='-' * (len(user + machineName) + 1),
-    OS=OSVer))
+    USR=username,
+    MNAME=machine_name,
+    DASHES='-' * (len(username + machine_name) + 1),
+    OS=os_version))
