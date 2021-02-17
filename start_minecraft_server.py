@@ -78,7 +78,7 @@ java_path,
 '-XX:MaxTenuringThreshold=1',
 # server jar
 '-jar',
-explicit_jar_name if explicit_jar_name != None else set_server_jar(),
+explicit_jar_name if explicit_jar_name != None else get_server_jar(),
 'nogui'
 ]
 
