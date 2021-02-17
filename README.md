@@ -6,20 +6,20 @@ cool and epic:tm: collection of python 3 scripts i've made
 - Takes frames from a specified video file and saves them as images to a directory.
 - Specify framerate, start time and a frame limit.
 
-###  [img_converter.py](img_converter.py)
+### [img_converter.py](img_converter.py)
 - Batch image converter from any format to one format (ex folder of png, bmp, jpg to jpg)
 - Can specify compression quality of output format when appplicable.
 - Origin folder can only contain images or else it breaks. might fix.
 
-###  [pinger.py](pinger.py)
+### [pinger.py](pinger.py)
 - Pings things. Windows only.
 
-###  [wallpaper_changer.py](wallpaper_changer.py)
+### [wallpaper_changer.py](wallpaper_changer.py)
 - Changes your Windows 10 (untested on 7,8) to a random image in a folder when idle for a specified time (default 20 seconds)
 - No fade effect between two wallpapers, was too laggy for me
 - Still lets Windows pick the accent color
 
-###  [pyfetch.py](pyfetch.py)
+### [pyfetch.py](pyfetch.py)
 - An implementation of neofetch in python for Windows systems.
 - Currently requires either Powershell 5.1+ or [Powershell Core](https://github.com/PowerShell/PowerShell#-powershell) (because of the Get-ConputerInfo powershell command and use of ANSI color escape sequences)
 - Incomplete
@@ -42,3 +42,11 @@ cool and epic:tm: collection of python 3 scripts i've made
 ### [ezmath.py](ezmath.py)
 - Epic and Cool math utilities, has sin+cos+tan in degrees, some simple shapes, and some 3d shape volume
 - will be eternally infdev
+
+### [start_minecraft_server.py](start_minecraft_server.py)
+- Minecraft server start script in python
+- Using [Aikars flags](https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/) for <10 GB allocated
+- Dont need to specify server jar as long as you only have 1 jar in server folder
+- If you have more, it will go down an order of 'most performance/importance', or specify it yourself
+  - Paper forks -> Bukkit and Bukkit forks -> Modded/Modded-plugin -> Vanilla
+- Auto-accept mojang EULA

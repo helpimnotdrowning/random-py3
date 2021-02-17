@@ -5,15 +5,18 @@ from subprocess import Popen
 java_path = 'java'
 max_ram = '3G'
 
-def set_server_jar():
+# specify jar name if you want to use somehting else
+explicit_jar_name = None
+
+def get_server_jar():
     # vanilla server
     vanilla = ['minecraft_server']
     # bukkit and bukkit forks
-    bukkit = ['bukkit','spigot','paper','glowstone']
+    bukkit = ['paper','glowstone','cloudspigot','tacospigot','spigot','bukkit']
     # paper/tuinity forks
-    paper_forks = ['tuinity','purpur','yatopia','akarin','empirecraft','origami']
+    paper_forks = ['tuinity','purpur','yatopia','akarin','empirecraft','origami','purplane']
     # modded servers
-    modded = ['fabric','forge','sponge','magma']
+    modded = ['fabric','forge','sponge','magma','thermos','crucible']
 
     # in order of importance 
     server_types = [paper_forks,bukkit,modded,vanilla]
@@ -23,7 +26,7 @@ def set_server_jar():
     # make list of jar and exe files
     for file in os.listdir(os.getcwd()):
         if file.endswith('jar') or file.endswith('exe'):
-            jars_list.append(file)
+            jars_list.append(file.lower())
             
     # get server jar
     for server_apis in server_types:
@@ -33,6 +36,7 @@ def set_server_jar():
                     return jar
 
 # auto accept eula file
+# https://account.mojang.com/documents/minecraft_eula
 with open(os.getcwd() + '/eula.txt', 'w') as eula_file:
     eula_file.write('eula=true')
     
@@ -50,6 +54,9 @@ java_path,
 # set min/max ram
 '-Xmx' + max_ram,
 '-Xms' + max_ram,
+# anything not spigot-based has problems launching if the default windows text encoding is UTF8,
+# this flag fixes that
+'-Dsun.stdout.encoding=UTF-8'
 # aikars flags
 '-XX:+UseG1GC',
 '-XX:+ParallelRefProcEnabled',
@@ -71,7 +78,7 @@ java_path,
 '-XX:MaxTenuringThreshold=1',
 # server jar
 '-jar',
-set_server_jar(),
+explicit_jar_name if explicit_jar_name != None else set_server_jar(),
 'nogui'
 ]
 
