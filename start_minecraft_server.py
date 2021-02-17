@@ -56,7 +56,7 @@ java_path,
 '-Xms' + max_ram,
 # anything not spigot-based has problems launching if the default windows text encoding is UTF8,
 # this flag fixes that
-'-Dsun.stdout.encoding=UTF-8'
+'-Dsun.stdout.encoding=UTF-8',
 # aikars flags
 '-XX:+UseG1GC',
 '-XX:+ParallelRefProcEnabled',
