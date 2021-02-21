@@ -85,6 +85,4 @@ custom_start_time = custom_start_time if custom_start_time != '' else 0
 custom_frame_limit = input('Input custom frame limit (empty for none): ')
 custom_frame_limit = custom_frame_limit if custom_frame_limit != '' else -1
 
-
-
 extractor(target_video_path, outpur_frames_path, float(custom_start_time), float(custom_frame_rate), int(custom_frame_limit))
