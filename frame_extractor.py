@@ -75,14 +75,16 @@ def extractor(video_filepath, frame_output_path, start_time = 0, fps = 2, frame_
 
 target_video_path = input('Target video path : ')
 outpur_frames_path = input('Output frames path : ')
-custom_frame_rate = 2
-custom_start_time = 0
-custom_frame_limit = -1
 
 custom_frame_rate = input('Input custom frames/second (empty for 2) : ')
+custom_frame_rate = custom_frame_rate if custom_frame_rate != '' else 2
 
 custom_start_time = input('Input custom start time (empty for 0)    : ')
-    
+custom_start_time = custom_start_time if custom_start_time != '' else 0
+
 custom_frame_limit = input('Input custom frame limit (empty for none): ')
+custom_frame_limit = custom_frame_limit if custom_frame_limit != '' else -1
+
+
 
 extractor(target_video_path, outpur_frames_path, float(custom_start_time), float(custom_frame_rate), int(custom_frame_limit))
