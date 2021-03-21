@@ -2,6 +2,13 @@
 # python3
 
 cool and epic:tm: collection of python 3 scripts i've made
+
+Quick Links:
+
+[frame_extractor.py](frame_extractor.py) | [img_converter.py](img_converter.py) | [pinger.py](pinger.py) | [wallpaper_changer.py](wallpaper_changer.py) | [pyfetch.py](pyfetch.py) | [auto_img2ascii.py](auto_img2ascii.py) | [mc_advancement_list.py](mc_advancement_list.py) | [cuboid_panorama_splitter.py](cuboid_panorama_splitter.py) | [ass_2_lrc.py](ass_2_lrc.py) | [ezmath.py](ezmath.py) | [start_minecraft_server.py](start_minecraft_server.py) | [get_frame.py](get_frame.py)
+
+Descriptions of all scripts:
+
 ### [frame_extractor.py](frame_extractor.py)
 - Takes frames from a specified video file and saves them as images to a directory.
 - Specify framerate, start time and a frame limit.
@@ -50,3 +57,6 @@ cool and epic:tm: collection of python 3 scripts i've made
 - If you have more, it will go down an order of 'most performance/importance', or specify it yourself
   - Paper forks -> Bukkit and Bukkit forks -> Modded/Modded-plugin -> Vanilla
 - Auto-accept mojang EULA
+
+### [get_frame.py](get_frame.py)
+- Like [frame_extractor.py](frame_extractor.py), but more like a library to extract a single frame from a video than dump all frames from a video
