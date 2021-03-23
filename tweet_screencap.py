@@ -3,9 +3,9 @@ import get_frame
 import cv2
 import schedule
 import os
-import time
-import random
-import datetime as dt
+from time import sleep
+from random import randrange
+from datetime import datetime
 
 # setup tweepy auth
 # get yer own keys
@@ -51,36 +51,33 @@ def job():
     # at least i think so, i haven't tried.
     global sec
     
-    # save frame
-    # currently will probably crash when it tries to go beyond the end of the video
-    cv2.imwrite("tmp.png", get_frame.get_frame(video, sec)[1])
-    
-    # TODO: replace above with
-    #
-    # success, frame = get_frame.get_frame(video, sec)
-    #     if success:
-    #         send_the_tweet
-    #     else if not_success:
-    #         switch_to_next_video
-    #
-    # or something like that
-    
-    # upload frame to twitter, then get the media ID from that upload and tweet the image
-    api.update_status(media_ids=[api.media_upload(filename="tmp.png").media_id_string])
-    
-    # delete the image locally
-    os.remove("tmp.png")
-    
-    # go forwards 4-8 seconds in the video
-    # its what the old bot did
-    # change to  sec += 1  if you want to go every 1 second,  sec += 5  for 5 seconds, etc.
-    sec += random.randrange(4,8)
-    
-    # save the time to the pick up file
-    write_file("pick_up_time.txt", sec)
-    
-    # log that tweet has been sent to console
-    print("frame at " + str(sec) + " sent at " + str(dt.datetime.now().time()))
+    if success:
+        # save frame
+        cv2.imwrite("tmp.png", frame)
+        
+        # upload frame to twitter, then get the media ID from that upload and tweet the image
+        api.update_status(media_ids=[api.media_upload(filename="tmp.png").media_id_string])
+        
+        # delete the image locally
+        os.remove("tmp.png")
+        
+        # go forwards 4-8 seconds in the video
+        # its what the old bot did
+        # change to  sec += 1  if you want to go every 1 second,  sec += 5  for 5 seconds, etc.
+        sec += randrange(4,8)
+        
+        # save the time to the pick up file
+        write_file("pick_up_time.txt", sec)
+
+        # log that tweet has been sent to console
+        print("frame at " + str(sec) + " sent at " + str(datetime.now().time()))
+   
+    else:
+        # self descriptive
+        # replace recipient ID with your own twitter ID
+        api.send_direct_message(recipient_id=0, text='HEY DUMBASS THE EPISODE ENDED AND AUTO EPISODE SWITCHING HASNT BEEN ADDED')
+        print("WARN: THE EPISODE IS OVER AND THERE ISNT AUTO EPISODE SWITCHING")
+        print("WARN: THAT MESSAGE SHOULD NEVER HAVE BEEN PRINTED. MAKE AN ISSUE AT https://github.com/helpimnotdrowning/random-py3/issues !!!!!")
     
     
 # schedule tweet to be sent at XX:00 and XX:30 every hour
@@ -91,5 +88,5 @@ while True:
     # send tweet on schedule
     schedule.run_pending()
     # if it doesnt time.sleep it uses 100% CPU
-    time.sleep(1)
+    sleep(1)
     
