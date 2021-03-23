@@ -23,15 +23,9 @@ def extractor(video_filepath, frame_output_path, start_time = 0, fps = 2, frame_
 
     # I have no idea what this does but it works
     # thank you medium.com for letting me steal your code
-    def get_frame(time_counter):
-        vidCap.set(cv2.CAP_PROP_POS_MSEC, time_counter * 1000)
-        has_frames, image = vidCap.read()
-        if has_frames:
-            o = str(dt.timedelta(seconds=time_counter))
-            cv2.imwrite(frame_output_path + "frame_" + str(count) + "_@_time_" + o.replace(":", "'") + ".png", image)
-        return has_frames
+    # def get_frame()...
 
-    success = get_frame(time_counter)
+    success = get_frame(frame_output_path, vidCap, time_counter, count)
 
     print("Operation started at " + str(dt.datetime.now().time()))
 
@@ -54,7 +48,7 @@ def extractor(video_filepath, frame_output_path, start_time = 0, fps = 2, frame_
                 time_counter += frame_rate
                 # round time to hundreths place, no weird decimals here
                 time_counter = round(time_counter, 2)
-                success = get_frame(time_counter)
+                success = get_frame(frame_output_path, vidCap, time_counter, count)
                 
         # normal operation when no frame limit
         elif enable_frame_limit == False:  
@@ -63,7 +57,7 @@ def extractor(video_filepath, frame_output_path, start_time = 0, fps = 2, frame_
             time_counter += frame_rate
             # round time to hundreths place, no weird decimals here
             time_counter = round(time_counter, 2)
-            success = get_frame(time_counter)
+            success = get_frame(frame_output_path, vidCap, time_counter, count)
             
     exit_intent = input("Final frame {0} exported at {1}\npress ENTER to exit or ANY KEY and ENTER to go again...".format(str(count), str(dt.datetime.now().time())))
     # if any key was pressed to restart
@@ -72,6 +66,15 @@ def extractor(video_filepath, frame_output_path, start_time = 0, fps = 2, frame_
     else:
         exit()
         
+        
+def get_frame(frame_output_path, vidCap, time_counter, count):
+    vidCap.set(cv2.CAP_PROP_POS_MSEC, time_counter * 1000)
+    has_frames, image = vidCap.read()
+    if has_frames:
+        o = str(dt.timedelta(seconds=time_counter))
+        cv2.imwrite(frame_output_path + "frame_" + str(count) + "_@_time_" + o.replace(":", "'") + ".png", image)
+    return has_frames
+
 
 target_video_path = input('Target video path : ')
 outpur_frames_path = input('Output frames path : ')
