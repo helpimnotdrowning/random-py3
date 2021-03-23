@@ -51,6 +51,8 @@ def job():
     # at least i think so, i haven't tried.
     global sec
     
+    success, frame = get_frame.get_frame(video, sec)
+    
     if success:
         # save frame
         cv2.imwrite("tmp.png", frame)
