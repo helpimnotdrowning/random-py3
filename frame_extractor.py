@@ -4,6 +4,15 @@ import datetime as dt
 from pathlib import Path as path
 
 
+def get_frame(frame_output_path, vidCap, time_counter, count):
+    vidCap.set(cv2.CAP_PROP_POS_MSEC, time_counter * 1000)
+    has_frames, image = vidCap.read()
+    if has_frames:
+        o = str(dt.timedelta(seconds=time_counter))
+        cv2.imwrite(frame_output_path + "frame_" + str(count) + "_@_time_" + o.replace(":", "'") + ".png", image)
+    return has_frames
+    
+    
 def extractor(video_filepath, frame_output_path, start_time = 0, fps = 2, frame_limit = -1):
     frame_rate = 1 / fps
     
@@ -67,15 +76,6 @@ def extractor(video_filepath, frame_output_path, start_time = 0, fps = 2, frame_
         exit()
         
         
-def get_frame(frame_output_path, vidCap, time_counter, count):
-    vidCap.set(cv2.CAP_PROP_POS_MSEC, time_counter * 1000)
-    has_frames, image = vidCap.read()
-    if has_frames:
-        o = str(dt.timedelta(seconds=time_counter))
-        cv2.imwrite(frame_output_path + "frame_" + str(count) + "_@_time_" + o.replace(":", "'") + ".png", image)
-    return has_frames
-
-
 target_video_path = input('Target video path : ')
 outpur_frames_path = input('Output frames path : ')
 
