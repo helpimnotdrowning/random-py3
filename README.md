@@ -5,7 +5,7 @@ cool and epic:tm: collection of python 3 scripts i've made
 
 Quick Links:
 
-[frame_extractor.py](frame_extractor.py) | [img_converter.py](img_converter.py) | [pinger.py](pinger.py) | [wallpaper_changer.py](wallpaper_changer.py) | [pyfetch.py](pyfetch.py) | [auto_img2ascii.py](auto_img2ascii.py) | [mc_advancement_list.py](mc_advancement_list.py) | [cuboid_panorama_splitter.py](cuboid_panorama_splitter.py) | [ass_2_lrc.py](ass_2_lrc.py) | [ezmath.py](ezmath.py) | [start_minecraft_server.py](start_minecraft_server.py) | [get_frame.py](get_frame.py)
+[frame_extractor.py](https://github.com/helpimnotdrowning/random-py3#frame_extractorpy) | [img_converter.py](https://github.com/helpimnotdrowning/random-py3#img_converterpy) | [pinger.py](https://github.com/helpimnotdrowning/random-py3#pingerpy) | [wallpaper_changer.py](https://github.com/helpimnotdrowning/random-py3#wallpaper_changerpy) | [pyfetch.py](https://github.com/helpimnotdrowning/random-py3#pyfetchpy) | [auto_img2ascii.py](https://github.com/helpimnotdrowning/random-py3#auto_img2asciipy) | [mc_advancement_list.py](https://github.com/helpimnotdrowning/random-py3#mc_advancement_listpy) | [cuboid_panorama_splitter.py](https://github.com/helpimnotdrowning/random-py3#cuboid_panorama_splitterpy) | [ass_2_lrc.py](https://github.com/helpimnotdrowning/random-py3#ass_2_lrcpy) | [ezmath.py](https://github.com/helpimnotdrowning/random-py3#ezmathpy) | [start_minecraft_server.py](https://github.com/helpimnotdrowning/random-py3#start_minecraft_serverpy) | [get_frame.py](https://github.com/helpimnotdrowning/random-py3#get_framepy)
 
 Descriptions of all scripts:
 
