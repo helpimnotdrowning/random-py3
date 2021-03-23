@@ -1,11 +1,12 @@
-import tweepy
-import get_frame
-import cv2
-import schedule
-import os
-from time import sleep
-from random import randrange
-from datetime import datetime
+import tweepy # twitter api
+import get_frame # get frame
+import cv2 # save temp image
+import schedule # schedule send tweets
+import os # check for pick up time
+from time import sleep # make cpu not explode
+from random import randrange # proceed random amount of time
+from datetime import datetime # logging when tweet was sent
+import tenacity # easy retry uploading image/sending tweet incase of bad internet
 
 # setup tweepy auth
 # get yer own keys
@@ -45,6 +46,16 @@ sec = int(read_file("pick_up_time.txt"))
 print("picking up at " + str(sec))
 
 
+@tenacity.retry
+def upload_image_to_twitter(path):
+    return api.media_upload(filename=path).media_id_string
+    
+
+@tenacity.retry
+def send_tweet(media_id):
+    api.update_status(media_ids=[media_id])
+
+
 # main function
 def job():
     # use as global to access the saved time
@@ -57,8 +68,11 @@ def job():
         # save frame
         cv2.imwrite("tmp.png", frame)
         
-        # upload frame to twitter, then get the media ID from that upload and tweet the image
-        api.update_status(media_ids=[api.media_upload(filename="tmp.png").media_id_string])
+        # upload frame to twitter, then get the media ID from that
+        image_id = upload_image_to_twitter("tmp.png")
+        
+        # tweet the image
+        send_tweet(image_id)
         
         # delete the image locally
         os.remove("tmp.png")
