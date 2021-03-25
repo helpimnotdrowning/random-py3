@@ -46,16 +46,18 @@ sec = int(read_file("pick_up_time.txt"))
 print("picking up at " + str(sec))
 
 
+# upload image to twitter, keep retrying untill success
 @tenacity.retry
 def upload_image_to_twitter(path):
     return api.media_upload(filename=path).media_id_string
     
 
+# send tweet, keep retrying untill success
 @tenacity.retry
 def send_tweet(media_id):
     api.update_status(media_ids=[media_id])
-
-
+    
+    
 # main function
 def job():
     # use as global to access the saved time
@@ -78,9 +80,9 @@ def job():
         os.remove("tmp.png")
         
         # go forwards 4-8 seconds in the video
-        # its what the old bot did
+        # the current bot has a different range
         # change to  sec += 1  if you want to go every 1 second,  sec += 5  for 5 seconds, etc.
-        sec += randrange(4,8)
+        sec += randrange(4, 8)
         
         # save the time to the pick up file
         write_file("pick_up_time.txt", sec)
