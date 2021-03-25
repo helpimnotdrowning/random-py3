@@ -76,6 +76,9 @@ def job():
         # tweet the image
         send_tweet(image_id)
         
+        # log that tweet has been sent to console
+        print("frame at " + str(sec) + " sent at " + str(datetime.now().time()))
+        
         # delete the image locally
         os.remove("tmp.png")
         
@@ -86,9 +89,6 @@ def job():
         
         # save the time to the pick up file
         write_file("pick_up_time.txt", sec)
-
-        # log that tweet has been sent to console
-        print("frame at " + str(sec) + " sent at " + str(datetime.now().time()))
    
     else:
         # self descriptive
