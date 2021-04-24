@@ -14,8 +14,7 @@ import schedule # schedule send tweets
 try: # check if get_frame is downloaded
     import get_frame # get frame
 except ModuleNotFoundError:
-    print('get_frame.py not in current directory. Download from https://github.com/helpimnotdrowning/random-py3/blob/master/get_frame.py')
-    exit()
+    raise ModuleNotFoundError('get_frame.py not in current directory. Download from https://github.com/helpimnotdrowning/random-py3/blob/master/get_frame.py')
 import subprocess # use ffprobe to check video length
 
 from time import sleep, strftime, gmtime # make cpu not explode, time formatting
