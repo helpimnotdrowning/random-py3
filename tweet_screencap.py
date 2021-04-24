@@ -35,9 +35,6 @@ auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth, timeout=120)
 
-# vvv UNCOMMENT TO TEST
-#api = None
-
 sec = 1
 video_index = 0
 season_index = 0
@@ -134,9 +131,13 @@ def read_state():
     
 def save_state():
     logger.debug('Saving state...')
-    write_file("pick_up_time.txt", sec)
-    write_file("pick_up_video.txt", video_index)
-    write_file("pick_up_season.txt", season_index)
+    
+    if dont_save == True:
+        logger.debug('State not saved.')
+    else:
+        write_file("pick_up_time.txt", sec)
+        write_file("pick_up_video.txt", video_index)
+        write_file("pick_up_season.txt", season_index)
     
     
 def reset_state():
@@ -144,17 +145,6 @@ def reset_state():
     delete_file("pick_up_time.txt")
     delete_file("pick_up_video.txt")
     delete_file("pick_up_season.txt")
-    
-    
-# if its the first time running the bot (at least in current directory), make a "pick up" file,
-# so in case the bot crashes, pc crashes, blackout, the bot can pick up where it left off
-
-if not os.path.exists("pick_up_time.txt"):
-    write_file("pick_up_time.txt", "0") # start at beginning of video
-    
-# read pickup file and set video time to it
-sec = int(read_file("pick_up_time.txt"))
-logger.info('Next frame will be %s (%s)', seconds_to_time(sec), str(sec))
 
 
 # upload image to twitter, keep retrying untill success
@@ -307,6 +297,10 @@ if __name__ == '__main__':
     print(sys.argv)
     
     read_state()
+    
+    if '-test' in sys.argv:
+        api = None
+        dont_save = True
     
     if '-reset' in sys.argv:
         if '-y' in sys.argv:
