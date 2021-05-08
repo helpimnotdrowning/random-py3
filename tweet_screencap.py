@@ -78,6 +78,7 @@ def read_file(file):
     with open(file, 'r') as file_:
         return file_.read()
         
+        
 def read_image(file):
     return cv2.imread(file)
     
@@ -87,8 +88,8 @@ def delete_file(file):
         os.remove(file)
     except FileNotFoundError:
         pass
-
-
+        
+        
 def time_to_seconds(hours=0, minutes=0, seconds=0, ms = 0):
     hour_in_minutes = hours * 60
     minutes += hour_in_minutes
@@ -98,8 +99,8 @@ def time_to_seconds(hours=0, minutes=0, seconds=0, ms = 0):
     
 def seconds_to_time(seconds):
     return strftime("%H:%M:%S", gmtime(seconds))
-
-
+    
+    
 def read_state():
     global sec
     global season_index
@@ -109,20 +110,31 @@ def read_state():
     # so in case the bot crashes, pc crashes, blackout, the bot can pick up where it left off
     if not os.path.exists("pick_up_time.txt"):
         write_file("pick_up_time.txt", "1") # start at beginning of video
-    
-    # read pickup file and set video time to it
-    sec = float(read_file("pick_up_time.txt"))
-
-    if not os.path.exists('pick_up_season.txt'):
-        write_file("pick_up_season.txt", "0") # start at first season
         
-    # read pickup file and set season to it
-    season_index = int(read_file("pick_up_season.txt"))
-    
     if not os.path.exists('pick_up_video.txt'):
         write_file("pick_up_video.txt", '0') # start at first video
         
-    # read pickup file and set video to it
+    if not os.path.exists('pick_up_season.txt'):
+        write_file("pick_up_season.txt", "0") # start at first season
+        
+    _sec = read_file("pick_up_time.txt")
+    
+    # check if pick_up_time.txt is a tuple, if it is separate the 4 numbers expected into a list
+    if str(_sec).startswith('('):
+        time_split = str(_sec).replace('(','').replace(')','').split(',')
+        
+        # convert them all to numbers
+        for i in range(len(time_split)):
+            time_split[i] = int(time_split[i])
+            
+        # set sec to that
+        sec = float(time_to_seconds(time_split[0], time_split[1], time_split[2], time_split[3]))
+    
+    # else, if its just a normal number like what this script saves, dont do funny stuff with it
+    else:
+        sec = float(_sec)
+        
+    season_index = int(read_file("pick_up_season.txt"))
     video_index = int(read_file("pick_up_video.txt"))
     
     logger.debug('Picking up at season %s, video %s at %s (%s)', season_index + 1, video_index + 1, seconds_to_time(sec), sec)
