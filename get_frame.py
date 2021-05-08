@@ -18,10 +18,13 @@ def get_length(filename):
     return float(result.stdout)
     
     
-def seconds_to_time(seconds):
-    return strftime("%H:%M:%S", gmtime(seconds)) + str(round(seconds % 1, 3))[1:]
-    
-    
+def delete_file(file):
+    try:
+        osremove(file)
+    except FileNotFoundError:
+        pass
+        
+        
 # time should be in seconds, ex 13:21 -> 801
 # you can use seconds.milliseconds too, ex 6:46.72 -> 406.72
 def get_frame(video_filepath, time):
@@ -36,13 +39,16 @@ def get_frame(video_filepath, time):
         
     # use ffmpeg, this might seem like a weird descision, but i have a perfectly valid reason
     # using cv2 shifts the colors a bit so it looks different (i think it might be a limited vs full rgb thing but idk)
-    # using ffmpeg makes the colors completley accurate, and only adds 0.1~ seconds to execution time
-    result = subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-ss', seconds_to_time(time), '-i', video_filepath, '-vframes', '1', 'tmpframe.png'],
+    # using ffmpeg makes the colors completley accurate, and only adds a little to extraction time
+    result = subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-ss', str(time), '-i', video_filepath, '-vframes', '1', 'tmpframe.png'],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT)
         
     img = cv2.imread('tmpframe.png')
-    osremove('tmpframe.png')
+    delete_file('tmpframe.png')
+    
+    if img is None:
+        return (False, None)
     
     # return tuple of (success value: bool, image: numpy nth dim. array)
     # save image using cv2.imwrite('image.png', get_frame.get_frame(...)[1])
