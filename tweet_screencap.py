@@ -50,7 +50,7 @@ s2 = [
 ]
 
 movie = [
-    'just_remember_to/put_them_in_the_correct.order,
+    'just_remember_to/put_them_in_the_correct.order',
     r'and\for_windows_paths\with_the_other_slashes_you\need_to_have_an_r_before\the.quote'
 ]
 
