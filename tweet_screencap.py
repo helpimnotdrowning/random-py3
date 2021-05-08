@@ -98,7 +98,8 @@ def time_to_seconds(hours=0, minutes=0, seconds=0, ms = 0):
     
     
 def seconds_to_time(seconds):
-    return strftime("%H:%M:%S", gmtime(seconds))
+    seconds = float(seconds)
+    return strftime("%H:%M:%S", gmtime(seconds)) + str(round(seconds % 1, 3))[1:]
     
     
 def read_state():
@@ -251,6 +252,15 @@ def get_video():
     return video
     
     
+def next_video_please():
+    global video_index
+    global sec
+    
+    video_index += 1
+    sec = 0
+    logger.info("Episode over, switching to next.")
+    
+    
 # main function
 def tweet_frame():
     global sec
@@ -260,6 +270,7 @@ def tweet_frame():
     
     video = get_video()
     vid_length = get_length(video)
+    
     if sec <= vid_length:
     
         time_string = f'frame {seconds_to_time(sec)} ({str(sec)}) from season {str(season_index + 1)}, video {str(video_index + 1)}'
@@ -293,9 +304,13 @@ def tweet_frame():
                 logger.info('Next run should switch to next episode, sec %s is greater than video length %s', str(sec), str(vid_length))
             else:
                 logger.info('Next frame will be %s', time_string)
-            
+                
         else:
-            logger.critical('VIDEO FAILED TO DECODE!!!')
+            if sec >= (vid_length - 1.5):
+                next_video_please()
+            else:
+                raise RuntimeError("Failed to extract frame at {sec}, Dont know how to deal with this.")
+                
     else:
         video_index += 1
         sec = 0
