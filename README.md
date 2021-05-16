@@ -28,7 +28,7 @@ Descriptions of all scripts:
 
 ### [pyfetch.py](pyfetch.py)
 - An implementation of neofetch in python for Windows systems.
-- Currently requires either Powershell 5.1+ or [Powershell Core](https://github.com/PowerShell/PowerShell#-powershell) (because of the Get-ConputerInfo powershell command and use of ANSI color escape sequences)
+- Currently requires either Powershell 5.1+ or [Powershell Core](https://github.com/PowerShell/PowerShell#-powershell) (because of the Get-ComputerInfo powershell command and use of ANSI color escape sequences)
 - Incomplete
 
 ### [auto_img2ascii.py](auto_img2ascii.py)
