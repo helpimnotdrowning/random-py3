@@ -327,26 +327,41 @@ if __name__ == '__main__':
     if '-test' in sys.argv:
         api = None
         dont_save = True
-    
+        logger.warning('Starting in test mode.')
+        
     if '-reset' in sys.argv:
-        if '-y' in sys.argv:
-            reset_state()
+        if '-test' in sys.argv:
+            logger.warning('State not cleared. Exiting anyway.')
             exit()
+            
+        elif '-y' in sys.argv:
+            reset_state()
+            
         else:
-            sdsd = input('Reset state and start over at video 0? This cannot be undone. (y/n) :')
-            if sdsd.lower() == 'y':
+            ask_reset = input('Reset state and start over at video 0? This cannot be undone. (y/n) : ')
+            if ask_reset.lower() == 'y':
                 reset_state()
-                exit()
+                
             else:
                 logger.warning('State not cleared. Exiting anyway.')
                 exit()
             
     if '-tweet_now' in sys.argv:
-        tweet_frame()
-    
+        if '-test' in sys.argv:
+            tweet_frame()
+            
+        else:
+            ask_tweet = input('Send tweet now? (y/n) : ')
+            if ask_tweet.lower() == 'y':
+                tweet_frame()
+                
+            else:
+                logger.info('Tweet not sent. Starting normally.')
+        
     schedule.every().hour.at(":00").do(tweet_frame)
     schedule.every().hour.at(":30").do(tweet_frame)
-
+    
     while True:
         schedule.run_pending()
         sleep(1)
+        
