@@ -32,15 +32,15 @@ def fix_int(string):
 def find_time():
     screenshot = phk.screenshot()
     
-    fimg_coords = phk.locate('find.png', screenshot)
+    fimg_coords = phk.locate(b64_2_PIL_Image(find1), screenshot)
     
     if not fimg_coords:
-        fimg_coords = phk.locate('find2.png', screenshot)
+        fimg_coords = phk.locate(b64_2_PIL_Image(find2), screenshot)
         
     if not fimg_coords:
         raise RuntimeError('Couldn\'t locate find.png on-screen. Make sure MPC-HC is open and the timestamp is visible.')
         
-    time_img = screenshot.crop((fimg_coords[0]-175,fimg_coords[1]-6,fimg_coords[0]-6,fimg_coords[1] + fimg_coords[3]+6))
+    time_img = screenshot.crop((fimg_coords[0]-175,fimg_coords[1]-6,fimg_coords[0],fimg_coords[1] + fimg_coords[3]+6))
     
     return image_to_string(asarray(time_img), config="-c tessedit_char_whitelist=0123456789:.\/")
     
@@ -75,5 +75,10 @@ def fix_time(time):
     
     
 if __name__ == '__main__':
-    to_clipboard(fix_time(find_time()))
+    while True:
+        w = input('h?')
+        found_time = find_time()
+        print(found_time)
+        time = fix_time(found_time)
+        to_clipboard(time)
     
