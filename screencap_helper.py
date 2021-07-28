@@ -1,4 +1,4 @@
-# WARNING: This helper was made for a 1680x1050 monitor. If you need to use it on a monitor with a different resolution, make an issue at https://github.com/helpimnotdrowning/tweet_screencap/issues
+# WARNING: This helper was made for a 1680x1050 monitor. If you need to use it on a monitor with a different resolution, make an issue at https://github.com/helpimnotdrowning/random-py3/issues
 
 import re
 import pyautogui as phk
